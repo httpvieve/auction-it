@@ -7,30 +7,19 @@ class User (AbstractUser):
         return f"{self.username}"
      
 class Category(models.Model):
-    
-    tag = models.CharField(max_length = 25)
+    tag = models.CharField(max_length = 32, unique = True)
+    class Meta:
+        verbose_name_plural = "categories"
+
     def __str__(self):
         return f"{self.tag}"
 class Listing (models.Model):
-    
-    # categories = [
-    #     ('Fashion/Clothes','Fashion/Clothes'),
-    #     ('Gaming','Gaming'),
-    #     ('Health & Beauty','Health & Beauty'),
-    #     ('Collectibles','Collectible'),
-    #     ('Books','Books'),
-    #     ('Electronics','Electronics'),
-    #     ('Sports & Outdoors','Sports & Outdoors'),
-    #     ('Camera/Photo','Camera/Photo'),
-    #     ('Home','Home'),
-    #     ('Others','Others')
-    # ]
     
     auctioneer =  models.ForeignKey(User, on_delete = models.CASCADE, related_name = "listing")
     time_created = models.DateTimeField(auto_now = True)
     
     item_name = models.CharField(max_length = 64)
-    item_image = models.URLField(max_length=256, blank=True)
+    item_image = models.URLField(blank = True)
     item_description = models.TextField()
     item_category = models.ForeignKey(Category, null = True, blank = True, on_delete = models.SET_NULL, related_name = "categories")
     is_available = models.BooleanField(default = True)
@@ -43,7 +32,7 @@ class Listing (models.Model):
     
         
     def __str__(self):
-        return f'{self.auctioneer} have listed an item "{self.item_name}" for PHP {self.starting_bid}.'
+        return f' "{self.item_name} ({self.current_bid})"'
 
 class Bid (models.Model):
     
@@ -53,15 +42,7 @@ class Bid (models.Model):
     bid_offer = models.DecimalField(max_digits = 9, decimal_places = 2)
     
     def __str__(self):
-        return f'{self.current_user} have placed a bid on "{self.current_item}" for PHP {self.bid_offer}.'
-
-# class UserWatchlist (models.Model):
-    
-#     current_user = models.ForeignKey(User, on_delete = models.CASCADE, related_name = "watch_list")
-#     current_item = models.ForeignKey(Listing, on_delete = models.CASCADE, related_name = "watched_by")
-    
-#     def __str__(self):
-#         return f'{self.current_user} have added item "{self.item_name}" to their watchlist.'
+        return f'{self.current_user} bids {self.current_item} for PHP {self.bid_offer}.'
 
 class UserComment (models.Model):
     

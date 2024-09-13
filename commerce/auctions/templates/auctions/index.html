@@ -2,6 +2,18 @@
 
 {% block body %}
     <h2>Active Listings</h2>
+    {% for listing in auctions %}
 
-    TODO
+        <div class="listing_card">
+            <a href={%url 'view_listing' listing.id %} >
+            <img src="{{listing.item_image}}" width="200" height="200">
+            <h5> {{listing.item_name}} </h5>
+            <p> <strong>Price</strong>: ${{listing.starting_bid}}</p>
+            <p> Created {{listing.time_created}} </p> 
+            </a>
+        </div>
+
+    {% empty %}
+        <p>No items yet.</p>
+    {% endfor %}
 {% endblock %}
