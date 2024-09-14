@@ -3,19 +3,33 @@
 {% block body %}
 
 
-<h2> Listing: {{ listing.item_name }} </h2>
+    <h2> Listing: {{ listing.item_name }} </h2>
 
     <img src="{{ listing.item_image }}" width=500" height="500">
     <p> {{ listing.item_description }} </p>
     <h3>${{ listing.starting_bid }}</h3>
     <p> {{ count }} bid(s) so far. </p> 
-    <input type="number">
-    <button name="watchlist">Add to Watchlist</button>
-    <button name="place_bid">Place Bid</button>
+    
+    {% if user != listing.auctioneer %}
+        <button name="watchlist" value="listing.id">Add to Watchlist</button>
+        <a href={%url 'create_bid' listing.id %} >Bid</a>
+    {% else %}
+    <h4>Watchers:</h4>
+    {% comment %} {% for watcher in watchers %} {% endcomment %}
+    {% for bid in bids %}
+    {% comment %} {% if bid.current_item.item_name == listing.item_name and bid.current_user.name == watcher.name %} {% endcomment %}
+    {% if bid.current_item.item_name == listing.item_name %}
+    <ul><li> 
+        <p>{{bid.current_user}} bids for {{bid.bid_offer}}</p>
+        </li></ul>
+                {% endif %}
+            {% comment %} {% endfor %} {% endcomment %}
+        {% endfor %}
+    {% endif %}
     <h3>Details</h3>
     <ul>
     <li>Listed by: {{listing.auctioneer}} </li>
-    <li>Category: {{listing.item_category.tag}} </li>
+    <li>Category: {{listing.item_category.name}} </li>
     </ul>
 
 {% endblock %}

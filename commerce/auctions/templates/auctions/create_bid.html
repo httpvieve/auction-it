@@ -1,0 +1,14 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+    <h2>Place a Bid on {{ listing.item_name }}</h2>
+    <p>Current bid: PHP {{ listing.current_bid }}</p>
+    <form method="post">
+        {% csrf_token %}
+        {{ bid_form.as_p }}
+        <button type="submit" class="btn btn-primary">Place Bid</button>
+    </form>
+    <a href="{% url 'view_listing' listing.id %}" class="btn btn-secondary">Back to Listing</a>
+
+{% endblock %}

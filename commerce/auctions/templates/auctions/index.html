@@ -5,12 +5,12 @@
     {% for listing in auctions %}
 
         <div class="listing_card">
-            <a href={%url 'view_listing' listing.id %} >
             <img src="{{listing.item_image}}" width="200" height="200">
+            <a href={%url 'view_listing' listing.id %} >
             <h5> {{listing.item_name}} </h5>
+            </a>
             <p> <strong>Price</strong>: ${{listing.starting_bid}}</p>
             <p> Created {{listing.time_created}} </p> 
-            </a>
         </div>
 
     {% empty %}
