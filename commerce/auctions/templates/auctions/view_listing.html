@@ -2,6 +2,9 @@
 
 {% block body %}
 
+{% if message %}
+
+{% endif %}
 
     <h2> Listing: {{ listing.item_name }} </h2>
 
@@ -31,5 +34,21 @@
     <li>Listed by: {{listing.auctioneer}} </li>
     <li>Category: {{listing.item_category.name}} </li>
     </ul>
+    <h4> All comments: </h4>
+    {% for comment in comments %}
+        <p> <strong>{{user.username}} </strong> {{comment.time_created}}</p>
+        <p> {{comment.comment}} </p>
+
+    {% empty %}
+        <p>This listing has no comments yet.</p>
+    {% endfor %}
+    <h4>Add a Comment</h4>
+    <form method="post">
+        {% csrf_token %}
+        {{ comment_form.as_p }}
+        <button type="submit" class="btn btn-primary">Submit Comment</button>
+    </form>
+
+    
 
 {% endblock %}

@@ -39,12 +39,10 @@ class BidForm(forms.ModelForm):
         #         if bid_offer <= self.listing.current_bid:
         #             raise forms.ValidationError("Your bid must be higher than the current bid.")
         #     return bid_offer
-class CommentForm(forms.Form):
-    title = forms.CharField(label="Title: ", max_length=200, required=True,
-        widget = forms.Textarea(attrs={'style': 'width: 80%; height: 40px; display: block;'})
-        )
-    content = forms.CharField(
-        label = "Content:",
-        widget = forms.Textarea(attrs={'style': 'width: 80%; height: 50%;'}
-    )
-    )
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = UserComment
+        fields = ['comment']
+        widgets = {
+            'comment': forms.Textarea()
+        }

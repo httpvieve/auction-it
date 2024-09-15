@@ -112,34 +112,41 @@ def filter(request, category_name):
         'listings': listings
     })
 
+@login_required
 def view_listing(request, listing_id):
+    
     current = Listing.objects.get(pk=listing_id)
     count = current.watchers.count()
-    # watchers = [i.username for i in current.watchers.all()]
     pending_bids = [bid for bid in Bid.objects.all()]
+    comments = UserComment.objects.filter(current_item=current)
     
-    # try:
-    #     bids = Bid.objects.all()
-    #     pending_bids = [bid for bid in bids]
-    #     # pending_bids = Bid.objects.filter(current_item=current)
-    #     # pending_bids = [bid for bid in bids]
-    #     # listings = Listing.objects.filter(item_category=category, is_available=True)
-    # except Category.DoesNotExist:
-    #     pending_bids = []
-    # if request.method == "POST":
-    #     if 'watchlist' in request.POST:
-    #         pass
-    #     elif 'place_bid' in request.POST:
-    #         return render(request, "auctions/view_listing.html")
-    #         # return redirect('create_bid', listing_id=listing_id)
-
+    if request.method == 'POST':
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            new_comment = comment_form.save(commit = False)
+            new_comment.current_user = request.user
+            new_comment.current_item = current
+            new_comment.comment = request.POST['comment']
+            new_comment.save()
+            return redirect('view_listing', listing_id=listing_id)
+    else:
+        comment_form = CommentForm()
+    
     return render(request, "auctions/view_listing.html",{
                 'listing': current,
                 'count': count ,
-                'watchers':watchers,
-                'bids': pending_bids
+                'bids': pending_bids,
+                'comments': comments,
+                'comment_form': comment_form    
         })
-
+# TODO: (error pages)
+#  (1) unregistered user tries to view listing
+#  (2) offered bid < default
+#  (2)
+#  (2)
+#  (2)
+#  (2)
+ 
 @login_required
 def create_bid(request, listing_id):
     
@@ -162,7 +169,8 @@ def create_bid(request, listing_id):
                 target_listing.watchers.add(request.user)
                 # target_listing.watchers.add(request.user)
                 target_listing.save()
-                messages.success(request, "Your bid was placed successfully!")
+                # messages.add_message(request, messages.SUCCESS, 'Your bid was successfully placed.')
+                # messages.success(request, "Your bid was placed successfully!")
                 return redirect('view_listing', listing_id=listing_id)
             # else:
             #     pass
