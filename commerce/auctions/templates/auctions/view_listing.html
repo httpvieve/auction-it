@@ -17,28 +17,38 @@
     <p> {{ count }} bid(s) so far. </p> 
 
     
-    {% if user != listing.auctioneer %}
+    {% if user != listing.auctioneer %} 
+
         {% if user not in listing.watchers.all %}
             <a href={%url 'add_to_watchlist' listing.id %} >Add to Watchlist</a>
         {% else %}
-         <p> Listing is currently in your watchlist. </p>
-          <a href="{% url 'remove_from_watchlist' listing.id %}">Remove from Watchlist</a>
-         {% endif %}
-        <a href={%url 'create_bid' listing.id %} >Bid</a>
-    {% else %}
-    <h4>Watchers:</h4>
-    {% for bid in bids %}
-    {% if bid.current_item.item_name == listing.item_name %}
-    <ul><li> 
-        <p>{{bid.current_user}} bids for {{bid.bid_offer}}</p>
-        </li></ul>
-                {% endif %}
+            <p> Listing is currently in your watchlist. </p>
+            <a href="{% url 'remove_from_watchlist' listing.id %}">Remove from Watchlist</a>
+        {% endif %}
 
-        {% endfor %}
-    {% endif %}
+        <a href={%url 'create_bid' listing.id %} >Bid</a>
+
+        {% else %}
+
+        {% if count != 0%}
+        <h4> Bid Transactions :</h4>
+                {% for bid in bids %}
+                        {% if bid.current_item.item_name == listing.item_name %}
+                            <ul><li> 
+                            <p>{{bid.current_user}} bids for {{bid.bid_offer}}</p>
+                            </li></ul>
+                        {% endif %}
+                {% endfor %}
+                <a href="{% url 'close_auction' listing.id %}">Accept bid offer</a>
+            {% else %}
+                <h4>No bids yet.</h4>
+            {% endif %}
+        {% endif %}
     {% else %} 
-    <h5>Listing closed. This item was sold for ${{listing.current_bid}}.</h5>
+        <h5>This auction is closed and no longer accepting bids. This item was sold for ${{listing.current_bid}}.</h5>
     {% endif %}
+
+
     <h3>Details</h3>
     <ul>
     <li>Listed by: {{listing.auctioneer}} </li>

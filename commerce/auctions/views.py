@@ -154,15 +154,18 @@ def add_to_watchlist(request, listing_id):
 
 def remove_from_watchlist(request, listing_id):
     
-    
     target_listing = Listing.objects.get(pk=listing_id)
     target_listing.watchers.remove(request.user)
     target_listing.save()
     return redirect('view_listing', listing_id=listing_id)
       
  
-def close_bid():
-    pass
+def close_auction(request, listing_id):
+    
+    target_listing = Listing.objects.get(pk=listing_id)
+    target_listing.is_available = False
+    target_listing.save()
+    return redirect('view_listing', listing_id=listing_id)
  
  
 @login_required
