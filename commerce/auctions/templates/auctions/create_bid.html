@@ -2,8 +2,17 @@
 
 {% block body %}
 
+{% if messages %}
+{% for message in messages %}
+{{ message }}    <br>
+{% endfor %}
+{% endif %}
+{% if listing.item_image %}
+                            <img src="{{ listing.item_image }}" width="200" height="200" alt="{{ listing.item_name }}">
+                        {% endif %}
+                        <br>
     <h2>Place a Bid on {{ listing.item_name }}</h2>
-    <p>Current bid: PHP {{ listing.current_bid }}</p>
+    <p>Current bid: $ {{ listing.current_bid }}</p>
     <form method="post">
         {% csrf_token %}
         {{ bid_form.as_p }}

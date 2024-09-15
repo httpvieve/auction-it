@@ -1,9 +1,9 @@
 from django.contrib.auth import authenticate, login, logout
-from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
 from django.urls import reverse
 
 
@@ -143,41 +143,36 @@ def view_listing(request, listing_id):
                 'comments': comments,
                 'comment_form': comment_form    
         })
-# TODO: (error pages)
-#  (1) unregistered user tries to view listing
-#  (2) offered bid < default
-#  (2)
-#  (2)
-#  (2)
-#  (2)
+
  
 @login_required
 def create_bid(request, listing_id):
     
     target_listing = get_object_or_404(Listing, pk=listing_id)
     
-    if target_listing.is_available == False:
-        messages.error(request, "This auction has ended.")
-        return redirect('view_listing', listing_id=listing_id)
+    # if target_listing.is_available == False:
+    #     messages.error(request, "This auction has ended.")
+    #     return redirect('view_listing', listing_id=listing_id)
     
     if request.method =="POST":
         bid_form = BidForm(request.POST)
         if bid_form.is_valid():
-            # if bid_form.bid_offer > target_listing.current_bid:
+            offer = bid_form.cleaned_data['bid_offer']
+            current_price = target_listing.current_bid or target_listing.starting_bid
+            if offer > current_price:
                 confirmed_bid = bid_form.save(commit=False)
                 confirmed_bid.current_user = request.user
                 confirmed_bid.current_item = target_listing
-                confirmed_bid.bid_offer = request.POST['bid_offer']
+                confirmed_bid.bid_offer = offer
                 confirmed_bid.save()
-                target_listing.current_bid = confirmed_bid.bid_offer
+                
+                target_listing.current_bid = offer
                 target_listing.watchers.add(request.user)
-                # target_listing.watchers.add(request.user)
                 target_listing.save()
-                # messages.add_message(request, messages.SUCCESS, 'Your bid was successfully placed.')
-                # messages.success(request, "Your bid was placed successfully!")
+                messages.success(request, "Your bid was placed successfully!")
                 return redirect('view_listing', listing_id=listing_id)
-            # else:
-            #     pass
+            else:
+                messages.error(request, f'Your bid must be higher than the current bid of {target_listing.current_bid}.')
     else:
         bid_form = BidForm()
 
