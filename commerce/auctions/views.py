@@ -97,8 +97,12 @@ def all_categories(request):
     return render(request, "auctions/view_categories.html")
 
 @login_required
+
 def view_watchlist(request):
-    return HttpResponseRedirect(reverse("index"))
+    watched_listings = Listing.objects.filter(watchers=request.user)
+    return render(request, "auctions/view_watchlist.html", {
+        "auctions": watched_listings
+    })
 
 def filter(request, category_name):
     try:
