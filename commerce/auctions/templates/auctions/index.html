@@ -6,6 +6,7 @@
     {% if auctions %}
         <div class="row">
             {% for listing in auctions %}
+                {% if listing.is_available %}
                 <div class="col-md-4 mb-4">
                     <div class="card">
                         {% if listing.item_image %}
@@ -19,6 +20,7 @@
                         </div>
                     </div>
                 </div>
+                {% endif %}
             {% endfor %}
         </div>
     {% else %}

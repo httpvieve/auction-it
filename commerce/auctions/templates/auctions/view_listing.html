@@ -10,24 +10,34 @@
 
     <img src="{{ listing.item_image }}" width=500" height="500">
     <p> {{ listing.item_description }} </p>
+
+    {% if listing.is_available %}
     <h3>${{ listing.starting_bid }}</h3>
+    <p> {{listing.watchers.count }} user(s) are currently watching this item. </p>
     <p> {{ count }} bid(s) so far. </p> 
+
     
     {% if user != listing.auctioneer %}
-        <button name="watchlist" value="listing.id">Add to Watchlist</button>
+        {% if user not in listing.watchers.all %}
+            <a href={%url 'add_to_watchlist' listing.id %} >Add to Watchlist</a>
+        {% else %}
+         <p> Listing is currently in your watchlist. </p>
+          <a href="{% url 'remove_from_watchlist' listing.id %}">Remove from Watchlist</a>
+         {% endif %}
         <a href={%url 'create_bid' listing.id %} >Bid</a>
     {% else %}
     <h4>Watchers:</h4>
-    {% comment %} {% for watcher in watchers %} {% endcomment %}
     {% for bid in bids %}
-    {% comment %} {% if bid.current_item.item_name == listing.item_name and bid.current_user.name == watcher.name %} {% endcomment %}
     {% if bid.current_item.item_name == listing.item_name %}
     <ul><li> 
         <p>{{bid.current_user}} bids for {{bid.bid_offer}}</p>
         </li></ul>
                 {% endif %}
-            {% comment %} {% endfor %} {% endcomment %}
+
         {% endfor %}
+    {% endif %}
+    {% else %} 
+    <h5>Listing closed. This item was sold for ${{listing.current_bid}}.</h5>
     {% endif %}
     <h3>Details</h3>
     <ul>

@@ -120,7 +120,7 @@ def filter(request, category_name):
 def view_listing(request, listing_id):
     
     current = Listing.objects.get(pk=listing_id)
-    count = current.watchers.count()
+    count = Bid.objects.filter(current_item=current.id).count()
     pending_bids = [bid for bid in Bid.objects.all()]
     comments = UserComment.objects.filter(current_item=current)
     
@@ -144,6 +144,26 @@ def view_listing(request, listing_id):
                 'comment_form': comment_form    
         })
 
+def add_to_watchlist(request, listing_id):
+
+    
+    target_listing = Listing.objects.get(pk=listing_id)
+    target_listing.watchers.add(request.user)
+    target_listing.save()
+    return redirect('view_listing', listing_id=listing_id)
+
+def remove_from_watchlist(request, listing_id):
+    
+    
+    target_listing = Listing.objects.get(pk=listing_id)
+    target_listing.watchers.remove(request.user)
+    target_listing.save()
+    return redirect('view_listing', listing_id=listing_id)
+      
+ 
+def close_bid():
+    pass
+ 
  
 @login_required
 def create_bid(request, listing_id):

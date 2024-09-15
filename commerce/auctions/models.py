@@ -31,6 +31,8 @@ class Category(models.Model):
 
     def __str__(self):
         return f"{self.name}"
+    
+
 class Listing (models.Model):
     
     auctioneer =  models.ForeignKey(User,null = True, blank = True, on_delete = models.CASCADE, related_name = "listing")
@@ -42,7 +44,8 @@ class Listing (models.Model):
     item_category = models.ForeignKey(Category, null = True, blank = True, on_delete = models.SET_NULL, related_name = "categories")
     is_available = models.BooleanField(default = True)
     
-    watchers = models.ManyToManyField(User, blank=True, related_name="watchlist")
+    watchers = models.ManyToManyField(User, blank = True, related_name="watchlist")
+    # comments = models.ForeignKey(UserComment, null = True, blank = True, on_delete = models.SET_NULL, related_name = "comments")
     
     starting_bid = models.DecimalField(max_digits = 9, decimal_places = 2)
     current_bid = models.DecimalField(max_digits = 9, decimal_places = 2, null = True, blank = True)
@@ -53,11 +56,21 @@ class Listing (models.Model):
         return f' "{self.item_name} ({self.current_bid})"'
     
     
+class UserComment (models.Model):
+    
+    current_user = models.ForeignKey(User,null = True, blank = True, on_delete = models.CASCADE, related_name = "comments")
+    current_item = models.ForeignKey(Listing, null = True, blank = True, on_delete = models.CASCADE, related_name = "comments")
+    comment = models.TextField()
+    
+    time_created = models.DateTimeField(auto_now = True)
+    
+    def __str__(self):
+        return f"{self.current_user} left a comment on auction {self.current_item}"
 
 class Bid (models.Model):
     
-    current_user = models.ForeignKey(User, on_delete = models.CASCADE, related_name = "bid")
-    current_item = models.ForeignKey(Listing, on_delete = models.CASCADE, related_name = "bid")
+    current_user = models.ForeignKey(User, null = True, blank = True, on_delete = models.CASCADE, related_name = "bid")
+    current_item = models.ForeignKey(Listing, null = True, blank = True, on_delete = models.CASCADE, related_name = "bid")
     # current_time = models.DateTimeField(auto_now = True)
     bid_offer = models.DecimalField(max_digits = 9, decimal_places = 2, name="bid_offer")
     
@@ -73,13 +86,4 @@ def create_categories(sender, **kwargs):
 post_migrate.connect(create_categories, sender=apps.get_app_config('auctions'))
 
 
-class UserComment (models.Model):
-    
-    current_user = models.ForeignKey(User, on_delete = models.CASCADE, related_name = "comments")
-    current_item = models.ForeignKey(Listing, on_delete = models.CASCADE, related_name = "comments")
-    comment = models.TextField()
-    time_created = models.DateTimeField(auto_now = True)
-    
-    def __str__(self):
-        return f"{self.user} left a comment:"
 
