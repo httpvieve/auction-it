@@ -10,11 +10,6 @@ from django.urls import reverse
 from .models import *
 from .forms import *
 
-
-
-
-#############################
-
 def index(request):
     return render(request, "auctions/index.html",{
                 "auctions":Listing.objects.all()
@@ -70,10 +65,6 @@ def register(request):
     else:
         return render(request, "auctions/register.html")
 
-
-
-
-
 @login_required
 def create_listing(request):
     
@@ -97,7 +88,6 @@ def all_categories(request):
     return render(request, "auctions/view_categories.html")
 
 @login_required
-
 def view_watchlist(request):
     watched_listings = Listing.objects.filter(watchers=request.user)
     return render(request, "auctions/view_watchlist.html", {
@@ -125,16 +115,27 @@ def view_listing(request, listing_id):
     comments = UserComment.objects.filter(current_item=current)
     
     if request.method == 'POST':
-        comment_form = CommentForm(request.POST)
-        if comment_form.is_valid():
-            new_comment = comment_form.save(commit = False)
-            new_comment.current_user = request.user
-            new_comment.current_item = current
-            new_comment.comment = request.POST['comment']
-            new_comment.save()
-            return redirect('view_listing', listing_id=listing_id)
-    else:
-        comment_form = CommentForm()
+        if "add_to_watchlist" in request.POST:
+            current.watchers.add(request.user)
+        elif "remove_from_watchlist" in request.POST:
+            current.watchers.remove(request.user)
+        elif "close_auction" in request.POST:
+            current.is_available = False
+        # elif "create_bid" in request.POST:
+        #     return render(request, "auctions/create_bid.html",{
+        #         'listing_id': current.id,
+        # })
+        else:
+            comment_form = CommentForm(request.POST)
+            if comment_form.is_valid():
+                new_comment = comment_form.save(commit = False)
+                new_comment.current_user = request.user
+                new_comment.current_item = current
+                new_comment.comment = request.POST['comment']
+                new_comment.save()
+        current.save()
+
+    comment_form = CommentForm()
     
     return render(request, "auctions/view_listing.html",{
                 'listing': current,
@@ -143,40 +144,12 @@ def view_listing(request, listing_id):
                 'comments': comments,
                 'comment_form': comment_form    
         })
-
-def add_to_watchlist(request, listing_id):
-
-    
-    target_listing = Listing.objects.get(pk=listing_id)
-    target_listing.watchers.add(request.user)
-    target_listing.save()
-    return redirect('view_listing', listing_id=listing_id)
-
-def remove_from_watchlist(request, listing_id):
-    
-    target_listing = Listing.objects.get(pk=listing_id)
-    target_listing.watchers.remove(request.user)
-    target_listing.save()
-    return redirect('view_listing', listing_id=listing_id)
-      
- 
-def close_auction(request, listing_id):
-    
-    target_listing = Listing.objects.get(pk=listing_id)
-    target_listing.is_available = False
-    target_listing.save()
-    return redirect('view_listing', listing_id=listing_id)
- 
  
 @login_required
 def create_bid(request, listing_id):
     
     target_listing = get_object_or_404(Listing, pk=listing_id)
-    
-    # if target_listing.is_available == False:
-    #     messages.error(request, "This auction has ended.")
-    #     return redirect('view_listing', listing_id=listing_id)
-    
+
     if request.method =="POST":
         bid_form = BidForm(request.POST)
         if bid_form.is_valid():

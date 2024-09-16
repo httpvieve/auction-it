@@ -20,13 +20,26 @@
     {% if user != listing.auctioneer %} 
 
         {% if user not in listing.watchers.all %}
-            <a href={%url 'add_to_watchlist' listing.id %} >Add to Watchlist</a>
+
+            <form method="POST">
+            {% csrf_token %}
+            <button type="submit" name="add_to_watchlist">Add to Watchlist</button>
+        </form>
+            {% comment %} <a href={%url 'add_to_watchlist' listing.id %} >Add to Watchlist</a> {% endcomment %}
         {% else %}
             <p> Listing is currently in your watchlist. </p>
-            <a href="{% url 'remove_from_watchlist' listing.id %}">Remove from Watchlist</a>
+            <form method="POST">
+            {% csrf_token %}
+            <button type="submit" name="remove_from_watchlist">Remove from Watchlist</button>
+            </form>
+            {% comment %} <a href="{% url 'remove_from_watchlist' listing.id %}">Remove from Watchlist</a> {% endcomment %}
         {% endif %}
 
-        <a href={%url 'create_bid' listing.id %} >Bid</a>
+    <form action="{% url 'create_bid' listing.id %}" method="POST">
+        {% csrf_token %}
+        <button type="submit" name="create_bid">Bid</button>
+    </form>
+        {% comment %} <a href={%url 'create_bid' listing.id %} >Bid</a> {% endcomment %} 
 
         {% else %}
 
@@ -39,7 +52,11 @@
                             </li></ul>
                         {% endif %}
                 {% endfor %}
-                <a href="{% url 'close_auction' listing.id %}">Accept bid offer</a>
+                  <form method="POST">
+            {% csrf_token %}
+            <button type="submit" name="close_auction">Close Auction</button>
+        </form>
+                {% comment %} <a href="{% url 'close_auction' listing.id %}">Accept bid offer</a> {% endcomment %}
             {% else %}
                 <h4>No bids yet.</h4>
             {% endif %}
@@ -56,7 +73,7 @@
     </ul>
     <h4> All comments: </h4>
     {% for comment in comments %}
-        <p> <strong>{{user.username}} </strong> {{comment.time_created}}</p>
+        <p> <strong>{{comment.current_user.username}} </strong> {{comment.time_created}}</p>
         <p> {{comment.comment}} </p>
 
     {% empty %}

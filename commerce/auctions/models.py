@@ -60,7 +60,7 @@ class UserComment (models.Model):
     
     current_user = models.ForeignKey(User,null = True, blank = True, on_delete = models.CASCADE, related_name = "comments")
     current_item = models.ForeignKey(Listing, null = True, blank = True, on_delete = models.CASCADE, related_name = "comments")
-    comment = models.TextField()
+    comment = models.TextField(null = True, blank = True)
     
     time_created = models.DateTimeField(auto_now = True)
     
