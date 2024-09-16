@@ -121,10 +121,7 @@ def view_listing(request, listing_id):
             current.watchers.remove(request.user)
         elif "close_auction" in request.POST:
             current.is_available = False
-        # elif "create_bid" in request.POST:
-        #     return render(request, "auctions/create_bid.html",{
-        #         'listing_id': current.id,
-        # })
+            current.watchers.clear()
         else:
             comment_form = CommentForm(request.POST)
             if comment_form.is_valid():
