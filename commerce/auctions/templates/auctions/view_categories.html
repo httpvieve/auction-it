@@ -3,14 +3,15 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-
+<br><br>
 <section class="py-8 antialiased dark:bg-gray-900 md:py-16">
   <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
     <div class="mb-4 flex items-center justify-between gap-4 md:mb-8">
-      <h2 class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">Shop by category</h2>
+      <h2 class="mx-auto text-xl font-semibold text-lightgray-900 dark:text-white sm:text-3xl">sort by category</h2><br><br>
+    
     </div>
 
-    <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+    <div class="mx-auto grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-center">
       
       <a href={%url 'filter' category_name="Art" %} class="flex items-center rounded-lg border border-gray-200 bg-white px-4 py-2 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
         <svg class="me-2 h-4 w-4 shrink-0 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -33,7 +34,7 @@
         <span class="text-sm font-medium text-gray-900 dark:text-white">Collectibles &amp; Toys</span>
       </a>
       
-<br>
+
 
       <a href={%url 'filter' category_name="Electronics" %} class="flex items-center rounded-lg border border-gray-200 bg-white px-4 py-2 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
         <svg class="me-2 h-4 w-4 shrink-0 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -57,9 +58,6 @@
       </a>
 
 
-      <br>
-
-
       <a href={%url 'filter' category_name="Home" %} class="flex items-center rounded-lg border border-gray-200 bg-white px-4 py-2 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
         <svg class="me-2 h-4 w-4 shrink-0 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m4 12 8-8 8 8M6 10.5V19a1 1 0 0 0 1 1h3v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h3a1 1 0 0 0 1-1v-8.5"></path>
@@ -81,7 +79,6 @@
         <span class="text-sm font-medium text-gray-900 dark:text-white">Music</span>
       </a>
 
-      <br>
 
       <a href={%url 'filter' category_name="Office Supplies" %} class="flex items-center rounded-lg border border-gray-200 bg-white px-4 py-2 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
         <svg class="me-2 h-4 w-4 shrink-0 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">

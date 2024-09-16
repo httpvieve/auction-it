@@ -2,8 +2,33 @@
 
 {% block body %}
 
-
-{% if listings %}
+{% if user.is_authenticated %}
+    <div class="auth-status">
+        <h2> active listings in {{category}}</h2>
+    </div>
+    {% endif %}  
+<div class="listings-container">
+    {% if auctions %}
+        {% for listing in auctions %}
+            {% if listing.is_available %}
+            <div class="listing-card">
+                {% if listing.item_image %}
+                    <img src="{{ listing.item_image }}" alt="{{ listing.item_name }}" class="listing-image">
+                {% endif %}
+                <div class="listing-details">
+                    <h2 class="listing-name">{{ listing.item_name }}</h2>
+                    <p class="listing-info">Listed on: {{ listing.time_created|date:"F d, Y" }} at {{ listing.time_created|time:"H:i" }}</p>
+                    <p class="listing-bid">Current bid: ${{ listing.current_bid }}</p>
+                    <a href="{% url 'view_listing' listing.id %}" class="listing-button">View Listing</a>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <p>No active listings available.</p>
+    {% endif %}
+</div>
+{% comment %} {% if listings %}
 <h1>Active Listings in {{ category }}</h1>
     {% for listing in listings %}
         <div>
@@ -17,6 +42,6 @@
     {% endfor %}
 {% else %}
     <p>No active listings found in this category ({{category}}).</p>
-{% endif %}
+{% endif %} {% endcomment %}
 
 {% endblock %}

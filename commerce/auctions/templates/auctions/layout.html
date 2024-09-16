@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width", initial-scale=1.0>
     <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
     <title>{% block title %}Auction It!{% endblock %}</title>
+    <link rel="icon" href="https://www.flaticon.com/free-icon/auction_1078325?term=auction+hammer&related_id=1078325">
     {% comment %} <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> {% endcomment %}
     <link href="{% static 'auctions/styles.css' %}" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>  
@@ -16,17 +17,17 @@
 </head>
 <body>
     <header class="header">
-        <a href="#" class="logo">auction.it</a>
+        <a href="{% url 'index' %}" class="logo"> auction.it</a>
         <nav class="navbar">
             {% if user.is_authenticated %}
             {% comment %} <p class="auth-status">Welcome, <strong> {{ user.username }}</strong>!</p> {% endcomment %}
-            <a href="{% url 'index' %}">active listings</a>
+            <a href="{% url 'index' %}">home</a>
             <a href="{% url 'categories' %}">view categories</a> 
                 <a href="{% url 'watchlist' %}">watchlist</a>
                 <a href="{% url 'create_listing' %}">create</a>
                 <a href="{% url 'logout' %}">log out</a>
             {% else %}
-                <p class="auth-status">Not signed in</p>
+                {% comment %} <p class="auth-status">Not signed in</p> {% endcomment %}
                 <a href="{% url 'login' %}">log in</a>
                 <a href="{% url 'register' %}">register</a>
             {% endif %}

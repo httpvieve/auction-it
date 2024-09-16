@@ -1,13 +1,16 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-<br>
-{% if user.is_authenticated %}
-    <div class="auth-status">
+<div class="auth-status">
+        {% if user.is_authenticated %}
         {% comment %} Signed in as <strong> {{ user.username }}</strong>. {% endcomment %}
-        <h2> all listings</h2>
+        {% comment %} <h2>Your next great find is just one bid away..</h2> {% endcomment %}
+        <h2>🟢 active listings</h2>
+        {% else %}
+        <h2>Explore our diverse range of items up for auction.
+            Log in/Sign up to start bidding and selling!</h2>
+        {% endif %}  
     </div>
-    {% endif %}  
 <div class="listings-container">
     {% if auctions %}
         {% for listing in auctions %}

@@ -30,7 +30,7 @@ body {
 }
 
 .logo {
-    font-size: 32px;
+    font-size: 38px;
     color:#0f172a;
     text-decoration: none;
     font-weight: 700;
@@ -71,12 +71,12 @@ body {
 }
 
 .auth-status {
-    justify-content: flex-start;
+
     padding: 20px 100px;
     margin-top: 6rem;
     font-weight: 600;
     font-size: 25px;
-    color: #334155;
+    color: #494a7b;
 }
 
 .listings-container {

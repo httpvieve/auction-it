@@ -1,7 +1,32 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-    <h2>Your Watchlist</h2>
+{% if user.is_authenticated %}
+    <div class="auth-status">
+        <h2> 🛒 your watchlist</h2>
+    </div>
+    {% endif %} 
+<div class="listings-container">
+    {% if auctions %}
+        {% for listing in auctions %}
+            {% if listing.is_available %}
+            <div class="listing-card">
+                {% if listing.item_image %}
+                    <img src="{{ listing.item_image }}" alt="{{ listing.item_name }}" class="listing-image">
+                {% endif %}
+                <div class="listing-details">
+                    <h2 class="listing-name">{{ listing.item_name }}</h2>
+                    <p class="listing-bid">Current bid: ${{ listing.current_bid }}</p>
+                    <a href="{% url 'view_listing' listing.id %}" class="listing-button">View Listing</a>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <p>You're not watching any listings yet.</p>
+    {% endif %}
+</div>
+    {% comment %} <h2>Your Watchlist</h2>
     {% if auctions %}
         <div class="row">
             {% for listing in auctions %}
@@ -21,5 +46,5 @@
         </div>
     {% else %}
         <p>You're not watching any listings yet.</p>
-    {% endif %}
+    {% endif %} {% endcomment %}
 {% endblock %}
