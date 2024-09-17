@@ -2,90 +2,103 @@
 
 {% block body %}
 
-{% if message %}
+<div class="individual-listing-container">
 
-{% endif %}
-
-    <h2> Listing: {{ listing.item_name }} </h2>
-
+<div class="primary-layout">
+    <div class="image-container">
     <img src="{{ listing.item_image }}" width=500" height="500">
-    <p> {{ listing.item_description }} </p>
+    </div>
+</div>    
 
-    {% if listing.is_available %}
-    <h3>${{ listing.starting_bid }}</h3>
+<div class="secondary-layout"
+<ul>
+ <li class="item-name"> {{ listing.item_name }}</li> 
+ 
+    <li>CATEGORY: {{listing.item_category.name}} </li>
+    
+    
+    <li>LISTED BY: {{listing.auctioneer}} </li>
+    
+{% if listing.is_available %}
+ <li class="item-price">${{ listing.starting_bid }}</li>
+    <div class="line-break"></div>
+    {% if listing.item_description|length == 0 %}
+    <li class="description"> No description provided. </li>
+    {% else %}
+    <li class="description">{{ listing.item_description }} </li>
+    {% endif %} 
     <p> {{listing.watchers.count }} user(s) are currently watching this item. </p>
-    <p> {{ count }} bid(s) so far. </p> 
-
-    
-    {% if user != listing.auctioneer %} 
-
+        <p> {{ count }} bid(s) so far. </p> 
+        {% if user != listing.auctioneer %} 
         {% if user not in listing.watchers.all %}
+        <form method="POST">
+            {% csrf_token %}
 
-            <form method="POST">
-            {% csrf_token %}
-            <button type="submit" name="add_to_watchlist">Add to Watchlist</button>
-        </form>
-            {% comment %} <a href={%url 'add_to_watchlist' listing.id %} >Add to Watchlist</a> {% endcomment %}
-        {% else %}
-            <p> Listing is currently in your watchlist. </p>
-            <form method="POST">
-            {% csrf_token %}
-            <button type="submit" name="remove_from_watchlist">Remove from Watchlist</button>
+<div class="buyer">
+<button class="watchlist-add-button"type="submit" name="add_to_watchlist">Add to Watchlist</button></li>
+                </form>
+                {% else %}
+                <p> Listing is currently in your watchlist. </p>
+                <form method="POST">
+                    {% csrf_token %}
+<button class="watchlist-remove-button" type="submit" name="remove_from_watchlist">Remove from Watchlist</button></li>
+                    </form>
+                    {% endif %}
+                    <form action="{% url 'create_bid' listing.id %}" method="POST">
+                        {% csrf_token %}
+<button class="bid-button" type="submit" name="create_bid">Bid</button></li>
+                        </form>
+</div>
+                        {% else %}
+            {% if count != 0%}
+            <h4> Bid Transactions :</h4>
+                    {% for bid in bids %}
+                            {% if bid.current_item.item_name == listing.item_name %}
+                                <ul><li> 
+                                <p>{{bid.current_user}} bids for {{bid.bid_offer}}</p>
+                                </li></ul>
+                            {% endif %}
+                    {% endfor %}
+                    <form method="POST">
+                {% csrf_token %}
+                <button type="submit" name="close_auction">Close Auction</button>
             </form>
-            {% comment %} <a href="{% url 'remove_from_watchlist' listing.id %}">Remove from Watchlist</a> {% endcomment %}
-        {% endif %}
-
-    <form action="{% url 'create_bid' listing.id %}" method="POST">
-        {% csrf_token %}
-        <button type="submit" name="create_bid">Bid</button>
-    </form>
-        {% comment %} <a href={%url 'create_bid' listing.id %} >Bid</a> {% endcomment %} 
-
-        {% else %}
-
-        {% if count != 0%}
-        <h4> Bid Transactions :</h4>
-                {% for bid in bids %}
-                        {% if bid.current_item.item_name == listing.item_name %}
-                            <ul><li> 
-                            <p>{{bid.current_user}} bids for {{bid.bid_offer}}</p>
-                            </li></ul>
-                        {% endif %}
-                {% endfor %}
-                  <form method="POST">
-            {% csrf_token %}
-            <button type="submit" name="close_auction">Close Auction</button>
-        </form>
-                {% comment %} <a href="{% url 'close_auction' listing.id %}">Accept bid offer</a> {% endcomment %}
             {% else %}
-                <h4>No bids yet.</h4>
+            <h4>No bids yet.</h4>
             {% endif %}
-        {% endif %}
-    {% else %} 
-        <h5>This auction is closed and no longer accepting bids. This item was sold for ${{listing.current_bid}}.</h5>
-    {% endif %}
+            {% endif %}
+            {% else %} 
+            <h5>This auction is closed and no longer accepting bids. This item was sold for ${{listing.current_bid}}.</h5>
+    {% endif %} 
+            
+</ul>
+
+</div>
 
 
-    <h3>Details</h3>
-    <ul>
-    <li>Listed by: {{listing.auctioneer}} </li>
-    <li>Category: {{listing.item_category.name}} </li>
-    </ul>
-    <h4> All comments: </h4>
-    {% for comment in comments %}
-        <p> <strong>{{comment.current_user.username}} </strong> {{comment.time_created}}</p>
-        <p> {{comment.comment}} </p>
 
-    {% empty %}
-        <p>This listing has no comments yet.</p>
-    {% endfor %}
-    <h4>Add a Comment</h4>
-    <form method="post">
-        {% csrf_token %}
-        {{ comment_form.as_p }}
-        <button type="submit" class="btn btn-primary">Submit Comment</button>
-    </form>
+</div>
+
+
+{% comment %} <div class="comment-container">
+
+            <h4> All comments: </h4>
+            {% for comment in comments %}
+                <p> <strong>{{comment.current_user.username}} </strong> {{comment.time_created}}</p>
+                <p> {{comment.comment}} </p>
+            {% empty %}
+                <p>This listing has no comments yet.</p>
+            {% endfor %}
+
+            <h4>Add a Comment</h4>
+
+            <form method="post">
+                {% csrf_token %}
+                {{ comment_form.as_p }}
+                <button type="submit" class="btn btn-primary">Submit Comment</button>
+            </form>
 
     
-
+</div> {% endcomment %}
 {% endblock %}
+
