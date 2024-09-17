@@ -102,8 +102,8 @@ def filter(request, category_name):
         listings = []
 
     return render(request, 'auctions/filter.html', {
-        'category': category_name,
-        'listings': listings
+        'category': category_name.lower(),
+        'auctions': listings
     })
 
 @login_required

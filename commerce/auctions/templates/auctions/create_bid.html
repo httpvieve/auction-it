@@ -7,10 +7,11 @@
 {{ message }}    <br>
 {% endfor %}
 {% endif %}
-{% if listing.item_image %}
-                            <img src="{{ listing.item_image }}" width="200" height="200" alt="{{ listing.item_name }}">
-                        {% endif %}
-                        <br>
+<div class="bid-form">
+    {% if listing.item_image %}
+    <img src="{{ listing.item_image }}" width="200" height="200" alt="{{ listing.item_name }}">
+    {% endif %}
+    <br>
     <h2>Place a Bid on {{ listing.item_name }}</h2>
     <p>Current bid: $ {{ listing.current_bid }}</p>
     <form method="post">
@@ -19,5 +20,5 @@
         <button type="submit" class="btn btn-primary">Place Bid</button>
     </form>
     <a href="{% url 'view_listing' listing.id %}" class="btn btn-secondary">Back to Listing</a>
-
+</div>
 {% endblock %}

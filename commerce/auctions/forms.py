@@ -8,18 +8,18 @@ class ListingForm(forms.ModelForm):
         model = Listing
         fields = ['item_name', 'item_description','item_image', 'item_category','starting_bid']
         labels = {
-            'item_name': 'Name', 
-            'item_description': 'Description',
-            'item_image':'Image URL',
-            'item_category':'Select category',
-            'starting_bid': 'Starting Bid'
+            'item_name': 'Product Name * ', 
+            'item_description': 'Product Description ',
+            'item_image':'Image URL ',
+            'item_category':'Select Category *  ',
+            'starting_bid': 'Initial Price * '
         }
         widgets = {
-            'item_name': forms.TextInput(), 
-            'item_description': forms.Textarea(), 
-            'item_image': forms.URLInput(), 
+            'item_name': forms.TextInput(attrs={'class': 'auction-name'}), 
+            'item_description': forms.Textarea(attrs={'class': 'auction-description'}), 
+            'item_image': forms.URLInput(attrs={'class': 'auction-img'}), 
             # 'item_category': forms.ModelChoiceField(queryset=Category.objects.all(), empty_label=None),
-            'starting_bid': forms.NumberInput()
+            'starting_bid': forms.NumberInput(attrs={'class': 'initial-price'})
         }
 
 class BidForm(forms.ModelForm):
@@ -46,5 +46,5 @@ class CommentForm(forms.ModelForm):
         model = UserComment
         fields = ['comment']
         widgets = {
-            'comment': forms.Textarea()
+            'comment': forms.Textarea(attrs={'class': 'comment'})
         }
