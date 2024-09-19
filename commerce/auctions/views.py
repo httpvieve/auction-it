@@ -94,6 +94,14 @@ def view_watchlist(request):
         "auctions": watched_listings
     })
 
+@login_required
+def user_listing(request):
+    user_listings = Listing.objects.filter(auctioneer=request.user)
+    return render(request, "auctions/user_listing.html", {
+        "auctions": user_listings
+    })
+    
+    
 def filter(request, category_name):
     try:
         category = Category.objects.get(name=category_name)
