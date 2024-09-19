@@ -45,6 +45,7 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = UserComment
         fields = ['comment']
+        labels = {'comment' : ''}
         widgets = {
-            'comment': forms.Textarea(attrs={'class': 'comment'})
+            'comment': forms.Textarea(attrs={'placeholder': 'Write a comment..', 'class': 'comment-area'})
         }

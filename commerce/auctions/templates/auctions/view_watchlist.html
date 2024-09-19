@@ -2,25 +2,29 @@
 
 {% block body %}
 {% if user.is_authenticated %}
-    <div class="auth-status">
+    <div class="page-title mx-auto text-xl font-semibold text-lightgray-900 dark:text-white sm:text-3xl">
         <h2> 🛒 your watchlist</h2>
     </div>
     {% endif %} 
 <div class="listings-container">
     {% if auctions %}
         {% for listing in auctions %}
-            {% if listing.is_available %}
             <div class="listing-card">
                 {% if listing.item_image %}
                     <img src="{{ listing.item_image }}" alt="{{ listing.item_name }}" class="listing-image">
                 {% endif %}
                 <div class="listing-details">
                     <h2 class="listing-name">{{ listing.item_name }}</h2>
+                    {% if listing.is_available %}
                     <p class="listing-bid">Current bid: ${{ listing.current_bid }}</p>
                     <a href="{% url 'view_listing' listing.id %}" class="listing-button">View Listing</a>
+                    {% else %}
+                    <div class="closed-notice">
+                        Auction Closed
+                    </div>
+                    {% endif %}
                 </div>
             </div>
-            {% endif %}
         {% endfor %}
     {% else %}
         <p>You're not watching any listings yet.</p>

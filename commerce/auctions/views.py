@@ -129,6 +129,7 @@ def view_listing(request, listing_id):
             current.watchers.remove(request.user)
         elif "close_auction" in request.POST:
             current.is_available = False
+            current.auction_winner = request.user
             current.watchers.clear()
         else:
             comment_form = CommentForm(request.POST)
