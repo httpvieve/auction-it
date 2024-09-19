@@ -7,7 +7,9 @@
     font-family: 'Poppins', sans-serif;
 }
 
+
 body {
+    
     min-height: 100vh; 
     background: rgb(241,245,249);
     background: radial-gradient(circle, rgba(241,245,249,1) 0%, rgba(248,250,252,1) 100%); 
@@ -15,38 +17,66 @@ body {
     background-size: cover;
     background-position: center; */
 }
-
-/* .infinite-scroll {
-    animation: infinite-scroll 10s infinite linear;
-    overflow: hidden;
-    white-space: nowrap;
+.banner-container {
+    background: url('images/header2.svg') no-repeat center;
+    display: flex;
+    position: block;
+    width: 100%;
+    height: 80vh;   
+    justify-content: center;
+}
+.auth-status {
+    margin-bottom: 3%;
+    margin-right: 5%;
 }
 
-@keyframes infinite-scroll {
-    0% {
-        transform: translateX(0%);
+.page-title{
+    margin-top: 5%;
+}
+.banner-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.typing-container{
+    display:inline-block;
+    border-right: 5px solid black;
+    height:68px;
+    width: 70%;
+    white-space: nowrap;
+    overflow: hidden;
+    animation:
+        typing 3s steps(44),
+        cursor .4s step-end infinite alternate;
+}
+@keyframes cursor {
+    50% {
+        border-color: transparent;
     }
-    100% {
-        transform: translateX(-100%);
-    } */
+}
+@keyframes typing {
+    from { width: 0}
+}
+
 
 .wrapper-container {
-    font-weight: bold;
+    margin-left:5%;
     margin-top: 3%;
-    background-color: #faf8fc;
+    background:transparent;
     /* border: 2px solid #4e4c67;  */
     height: 10vh;
     display: grid;
     place-items: center;
 }
 .wrapper {
-    background-color: #faf8fc;
-
+    color:#0f172a;
+    background: transparent;
     box-sizing: content-box;
-    height: 40px;
+    height: 50px;
     padding: 10px 10px;
     display:flex;
-    font-size: 30px;
+    font-size: 35px;
+    font-weight: bold;
     /* border: 2px solid #4e4c67;  */
 
 }
@@ -140,15 +170,6 @@ body {
     width: 100%;
 }
 
-.auth-status {
-
-    padding: 20px 100px;
-    margin-top: 6rem;
-    font-weight: 600;
-    font-size: 25px;
-    color: #494a7b;
-}
-
 .listings-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -225,7 +246,7 @@ h2 {
     color:#475579;
     font-size: 16px;
     font-weight: 600;
-    margin-top: 120px;
+    margin-top: 70px;
     display: flex;
     justify-content: center;
 }
@@ -236,7 +257,7 @@ h2 {
     height: 550px;
     width: 500px;
     /* background: #7776b3;   */
-    background: #e2e8f0; 
+    background:  #faf8fc; 
     border-radius: 15px; 
     position:relative;
 } 
@@ -302,7 +323,7 @@ input[type=number] {
 }
 
 
-.add-listing, bid-button{
+.add-listing{
     
     color: #faf8fc;
     background: #494a7b;
@@ -311,12 +332,6 @@ input[type=number] {
     padding: 15px;
 }
 
-
-.home:hover  {
-    text-shadow: 2px 2px 10px #494a7b;
-    transition: .3s;
-    filter: dropshadow(color=#494a7b, offx=2, offy=2); 
-}
 .add-listing:hover{
     /* text-shadow: 3px 3px 8px lightgrey; */
     box-shadow: 2px 2px 10px #494a7b;
@@ -324,14 +339,24 @@ input[type=number] {
     filter: dropshadow(color=#494a7b, offx=2, offy=2); 
 
   }
+
+.home:hover  {
+    text-shadow: 2px 2px 10px #494a7b;
+    transition: .3s;
+    filter: dropshadow(color=#494a7b, offx=2, offy=2); 
+}
 .login-container{
+    max-width: 100;
     display: flex;
-    background-color:#4e4c67;
-    height: 100%;
+    background:#4e4c67;
+    max-width: 1200px;
+    margin: 100px auto 0;
+    padding: 20px;
 }
 
 .individual-listing-container {
-    border: 2px solid red;
+    
+    /* border: 2px solid red; */
     gap:30px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
     background-color: #fff;
@@ -341,12 +366,12 @@ input[type=number] {
     margin: 100px auto 0;
     padding: 20px;
     list-style: none;
-   
+    height: 590px;
+    margin-bottom: 80px;
 }
 
 .primary-layout {
-    
-    border: 2px solid blue;
+    /* border: 2px solid blue; */
     flex: 1;
     max-width: 50%;
     padding-right: 20px;
@@ -367,63 +392,144 @@ input[type=number] {
     object-fit: contain;
 }
 .secondary-layout{
-    border: 2px solid blue;
+    /* border: 2px solid blue; */
     flex: 1;
     max-width: 50%;
     padding-left: 20px;
     display: flex;
     flex-direction: column;
-
 }
 
 .item-name, .item-price{
- 
-    font-size: 25px;
+    font-size: 30px;
     color:black;
     font-weight:bold;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
 }
 .line-break {
     width: 95%;
+    margin-bottom: 10px;
     border-bottom: 1px solid #ccc; /* Adjust color and style as needed */
 }
 .description {
     margin-right: 20px;
-    margin-top: 20px;
+    margin-bottom: 5px;
     height:40%;
     overflow: hidden;
     text-overflow: ellipsis;
-    border: 2px solid green;
+
 
 }
-.buyer {
-    border: 2px solid green;
+.transaction-count {
+    display: block;
+}
+
+.buyer, .seller, .closed-notice {
+    font-weight: bold;
+    display:flex;
+    align-items: center;
+    justify-content:space-around;
+}
+.buyer li, .seller li {
+    /* position: absolute; */
+    margin-top: 15px;
+    display: flex;
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: 2px solid #e0e0e0;
+    cursor: pointer;
+}
+.add-comment-button{
+    font-weight: bold;
+    margin-left: 67%;
+    width: 28%;
+    align-items: center;
+    justify-content:space-around;
+}
+.transaction-history {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    margin-top: 20px;
-    padding: 20px;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
 }
-.buyer button {
-    font-size: 25px;
+.transaction-card{
 
-    width: 100%;
     padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
+    align-items: center;
+    display: flex;
+}
+.accept-bid-button{
+    margin-left: 250px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: 3px solid #0f172a;
     cursor: pointer;
-    font-weight: 500;
-    text-align: center;
+    font-weight: bold;
+    color: #faf8fc;
+    background: darkgreen;
+
+
 }
-.watchlist-add-button, .watchlist-remove-button {
-    background-color: #f2f2f2;
-    color: #333;
+.closed-notice {
+    color: #8f1717;
 }
-.bid-button {
-    box-shadow: 2px 2px 10px #494a7b;
+.bid-button, .add-comment-button{
+    color: #0056b3;
+    background:#faf8fc;
+
+}
+.bid-button:hover{
+    box-shadow: 2px 2px 10px #faf8fc;
     transition: .3s;
-    filter: dropshadow(color=#494a7b, offx=2, offy=2); 
+    filter: dropshadow(color=#faf8fc, offx=2, offy=2); 
+ } 
+
+.watchlist-remove-button, .close-auction-button {
+    color: #fff;
+    background: #8f1717;
+}
+
+.watchlist-add-button{
+    color: #faf8fc;
+    background: #494a7b;
+}
+
+
+.transaction-container {
+        /* border: 2px solid red; */
+
+        display: flex;
+        max-width: 1400px;
+        margin: 100px auto 0;
+        padding: 20px;
+        list-style: none;
+        height: 700px;
+        margin-bottom: 80px;
+}
+
+.transaction-history, .transaction-comments {
+    flex: 1;
+    max-width: 50%;
+    margin: 20px;
+    /* border: 2px solid blueviolet;
+  */
+}
+
+
+/* .comment-card {
+
+    border: 2px solid rgb(76, 151, 173);
+} */
+.comment-details {
+    padding: 15px;
+
+
+}
+
+.comment-area {
+    margin-left: 5%;
+    margin-top: 5%;
+    border: 2px solid #4e4c67;
+    height: 30%;
+    width: 90%;
+    padding: 2%;
+    border-radius: 10px;
 }

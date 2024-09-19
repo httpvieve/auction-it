@@ -1,35 +1,38 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
+
+    <br><br><br>
 <div class="auth-status">
-    {% if user.is_authenticated %}
-    {% comment %} Signed in as <strong> {{ user.username }}</strong>. {% endcomment %}
-    {% comment %} <h2>Your next great find is just one bid away..</h2> {% endcomment %}
-    
-    {% comment %} <h5 class="text-xl font-bold dark:text-white text-center">NAVIGATE A WORLD OF DEALS AND OPPURTUNITIES.</h5> {% endcomment %}
-    <h1 class=" infinite-scroll mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white text-center"> 
-        Navigate a world of <span class="underline underline-offset-3 decoration-8 decoration-blue-400 dark:decoration-blue-600">deals and opportunities.🌐</span></h1>
+{% if user.is_authenticated %}
+<h5 class="text-l font-lighter dark:text-white text-end">Signed in as <strong> {{ user.username }}</strong>. </h5> 
+{% else %}
+<h5 class="text-l font-lighter dark:text-white text-end">
+    Not signed in.</h5> 
+    {% endif %} 
+</div>
+    <div class="banner-text"> 
+    <h1 class=" typing-container mb-4 text-4xl font-bold leading-none tracking-tight text-sky-900 md:text-5xl lg:text-6xl dark:text-white text-center"> 
+        Navigate a world of <span class=" underline underline-offset-1 decoration-8 decoration-neutral-900 dark:decoration-blue-600">deals and opportunities</span>.</h1>
+    </div>
+
+        <div class="banner-container">
+    </div>
+<hr>
     <div class="wrapper-container">
-        <div class="wrapper">
-            <p > Your one-stop marketplace for your </p>
+         <div class="wrapper">
+            <p> YOUR ONE-STOP MARKETPLACE FOR YOUR  </p>
             <div class="words">
-                <span class="wrapper-span"> daily deals 🏷️ </span>
-                <span class="wrapper-span"> style essentials 👗 </span>
-                <span class="wrapper-span"> gaming gears 🎮 </span>
-                <span class="wrapper-span"> vintage finds 📼 </span>
-                <span class="wrapper-span"> everyday essentials 🍃</span>
-                <span class="wrapper-span"> home supplies 🏠 </span>
+                <span class="wrapper-span"> DAILY DEALS 🏷️ </span>
+                <span class="wrapper-span"> STYLE ESSENTIALS 👗 </span>
+                <span class="wrapper-span"> GAMING GEARS 🎮 </span>
+                <span class="wrapper-span"> HOME SUPPLIES 🏠 </span>
+                <span class="wrapper-span"> EVERYDAY ESSENTIALS 🍃</span>
+                <span class="wrapper-span"> VINTAGE FINDS 📼 </span>
             </div>
         </div>
-    </div>
-    <br><br><br>
-    
-    {% comment %} <h1 class="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl text-center">Act on it! <span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400"> Auction it. </span> </h1> {% endcomment %}
-        {% else %}
-        <h2>Explore our diverse range of items up for auction.
-            Log in/Sign up to start bidding and selling!</h2>
-        {% endif %}  
-    </div>
+     </div>
+
 <div class="listings-container">
     {% if auctions %}
         {% for listing in auctions %}
