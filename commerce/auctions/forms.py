@@ -27,19 +27,8 @@ class BidForm(forms.ModelForm):
         model = Bid
         fields = ['bid_offer']
         widgets = {
-            'bid_offer': forms.NumberInput()
+            'bid_offer': forms.NumberInput(attrs={'class': 'bid-offer-input'})
         }
-    def __init__(self, *args, **kwargs):
-            self.listing = kwargs.pop('listing', None)
-            super(BidForm, self).__init__(*args, **kwargs)
-
-    def clean_bid_offer(self):
-        bid_offer = self.cleaned_data['bid_offer']
-        if self.listing:
-            current_bid = self.listing.current_bid or self.listing.starting_bid
-            if bid_offer <= current_bid:
-                raise ValidationError(f'Your bid must be higher than the current bid of {current_bid}.')
-        return bid_offer
 
 class CommentForm(forms.ModelForm):
     class Meta:
