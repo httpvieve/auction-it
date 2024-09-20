@@ -66,11 +66,22 @@
         </ul>
             {% endif %}
         {% else %} 
-        {% if user == listing.auctioneer %} 
-        <p>You have closed this listing. This item was sold for ${{listing.current_bid}}.</p> 
-        {% else %}
-         <p>You won this auction/This auction is closed and no longer accepting bids. This item was sold for ${{listing.current_bid}}.</p> 
-        {% endif %} 
+
+            {% if user == listing.auctioneer %}
+             <br><hr><br> 
+            <p>Listing archived.</p>
+                {% if listing.auction_winner is None %}
+                    <p>You have archived this listing.</p>
+                {% else %}
+                    <p> You have sold for ${{listing.current_bid}} to bidder {{listing.auction_winner}}. </p> 
+                {% endif %}
+            {% comment %} {% else %}
+                {% if listing.auction_winner == user %}
+                    <p>Congratulations! You're the winner in this auction. You have bought this item for ${{listing.current_bid}.</p>
+                {% else %}
+                    <p>This auction is closed and no longer accepting bids. This item was sold for ${{listing.current_bid}}.</p> 
+                {% endif %} {% endcomment %}
+            {% endif %} 
     {% endif %} 
 </div>
 </div>
@@ -93,16 +104,17 @@
 
 <div class="transaction-container">
     
-    <div class="transaction-history">
-        <h3 class="text-3xl font-bold dark:text-white"> TRANSACTIONS</h3>
-            {% if count != 0%}
+<div class="transaction-history">
+    {% if user == listing.auctioneer and listing.is_available %} 
+    <h3 class="text-3xl font-bold dark:text-white"> TRANSACTIONS</h3>
+    {% if count != 0%}
        {% for bid in bids reversed %}
             {% if bid.current_item.item_name == listing.item_name %}
                 <ul><br>
                 <li class="transaction-card"> 
                 <p class="inline-flex mb-3 text-gray-900 dark:text-gray-400">{{bid.current_user}} bids for {{bid.bid_offer}}
                 {% if bid.bid_offer == listing.current_bid %}
-                    <form method="POST">
+                <form method="POST">
                         {% csrf_token %}
                         <button class="accept-bid-button" type="submit" name="close_auction">Accept Bid</button>
                         </p>
@@ -116,8 +128,8 @@
                 {% else %}
                 <h4>No bids yet.</h4>
                 {% endif %}
+{% endif %}
     </div>
-
     <div class="transaction-comments">
                 <h2 class="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">Comments ({{comments|length}})</h2>
 
@@ -125,7 +137,7 @@
                 {% csrf_token %}
                 {{ comment_form.as_p }}
                  <ul>
-                <li class="add-comment-button"><button type="submit" class="btn btn-primary">Add Comment</button></li></ul>
+                <li class="add-comment-button"><button type="submit">Add Comment</button></li></ul>
             </form>
 
             {% for comment in comments %}

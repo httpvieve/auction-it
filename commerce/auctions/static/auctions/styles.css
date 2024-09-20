@@ -77,16 +77,12 @@ body {
     display:flex;
     font-size: 35px;
     font-weight: bold;
-    /* border: 2px solid #4e4c67;  */
-
 }
 .wrapper-span{
     display: block;
     padding-left: 10px;
     color: darkgreen;
     animation: rotate_words 6s infinite;
-/* 
-    text-shadow: 3px 3px 10px rgba(87, 189, 84, 0.9); */
 }
 .words {
     overflow: hidden;
@@ -236,7 +232,6 @@ body {
 .listing-button:hover {
     background-color: #0056b3;
 }
-
 h2 {
     text-align: center;
     margin-bottom: 20px;
@@ -322,7 +317,6 @@ input[type=number] {
     
 }
 
-
 .add-listing{
     
     color: #faf8fc;
@@ -331,7 +325,6 @@ input[type=number] {
     margin-left: 45%;
     padding: 15px;
 }
-
 .add-listing:hover{
     /* text-shadow: 3px 3px 8px lightgrey; */
     box-shadow: 2px 2px 10px #494a7b;
@@ -339,7 +332,6 @@ input[type=number] {
     filter: dropshadow(color=#494a7b, offx=2, offy=2); 
 
   }
-
 .home:hover  {
     text-shadow: 2px 2px 10px #494a7b;
     transition: .3s;
@@ -353,7 +345,6 @@ input[type=number] {
     margin: 100px auto 0;
     padding: 20px;
 }
-
 .individual-listing-container {
     
     /* border: 2px solid red; */
@@ -369,7 +360,6 @@ input[type=number] {
     height: 590px;
     margin-bottom: 80px;
 }
-
 .primary-layout {
     /* border: 2px solid blue; */
     flex: 1;
@@ -392,7 +382,6 @@ input[type=number] {
     object-fit: contain;
 }
 .secondary-layout{
-    /* border: 2px solid blue; */
     flex: 1;
     max-width: 50%;
     padding-left: 20px;
@@ -409,7 +398,7 @@ input[type=number] {
 .line-break {
     width: 95%;
     margin-bottom: 10px;
-    border-bottom: 1px solid #ccc; /* Adjust color and style as needed */
+    border-bottom: 1px solid #ccc; 
 }
 .description {
     margin-right: 20px;
@@ -417,11 +406,6 @@ input[type=number] {
     height:40%;
     overflow: hidden;
     text-overflow: ellipsis;
-
-
-}
-.transaction-count {
-    display: block;
 }
 
 .buyer, .seller, .closed-notice {
@@ -451,7 +435,6 @@ input[type=number] {
     flex-direction: column;
 }
 .transaction-card{
-
     padding: 10px 20px;
     align-items: center;
     display: flex;
@@ -460,13 +443,11 @@ input[type=number] {
     margin-left: 250px;
     padding: 10px 20px;
     border-radius: 10px;
-    border: 3px solid #0f172a;
+    border: 2px solid #faf8fc;
     cursor: pointer;
     font-weight: bold;
     color: #faf8fc;
     background: darkgreen;
-
-
 }
 .closed-notice {
     color: #8f1717;
@@ -474,56 +455,46 @@ input[type=number] {
 .bid-button, .add-comment-button{
     color: #0056b3;
     background:#faf8fc;
-
+}
+.add-comment-button{
+    padding: 10px;
 }
 .bid-button:hover{
     box-shadow: 2px 2px 10px #faf8fc;
     transition: .3s;
     filter: dropshadow(color=#faf8fc, offx=2, offy=2); 
  } 
-
 .watchlist-remove-button, .close-auction-button {
     color: #fff;
     background: #8f1717;
 }
-
 .watchlist-add-button{
     color: #faf8fc;
     background: #494a7b;
 }
-
-
 .transaction-container {
-        /* border: 2px solid red; */
-
-        display: flex;
-        max-width: 1400px;
-        margin: 100px auto 0;
-        padding: 20px;
-        list-style: none;
-        height: 700px;
-        margin-bottom: 80px;
+    align-items: flex-start;
+    display: flex;
+    max-width: 1400px;
+    margin: 100px auto 0;
+    padding: 20px;
+    list-style: none;
+    height: 700px;
+    margin-bottom: 80px;
 }
-
 .transaction-history, .transaction-comments {
     flex: 1;
     max-width: 50%;
     margin: 20px;
-    /* border: 2px solid blueviolet;
-  */
 }
-
-
-/* .comment-card {
-
-    border: 2px solid rgb(76, 151, 173);
-} */
 .comment-details {
     padding: 15px;
-
-
 }
-
+.bid-offer-input {
+    border-bottom: 2px solid #4e4c67;
+    height: 2rem;
+    width: 60%;
+}
 .comment-area {
     margin-left: 5%;
     margin-top: 5%;
@@ -532,4 +503,40 @@ input[type=number] {
     width: 90%;
     padding: 2%;
     border-radius: 10px;
+}
+.bid-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.bid-form {
+    width: 600px;
+}
+.bid-form img {
+    padding: 3px;
+    object-fit: cover;
+} 
+.bid-form textarea {
+    margin-top: 3%;
+    margin-left: 5%;
+    margin-right: 5%;
+    border-radius: 15px;
+    padding: 10px;
+    width: 90%;
+    border: 2px solid #0f172a;
+}
+.bid-form-options {
+    font-weight: bold;
+    display: flex;
+    font-size: 18px;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 10px;
+}
+
+.place-bid-button {
+    padding: 8px 20px;
+    border-radius: 10px;
+    background-color: #0056b3;
+    color: #faf8fc;
 }

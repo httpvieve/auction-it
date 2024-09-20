@@ -1,24 +1,29 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-
+<br><br><br><br><br>
 {% if messages %}
 {% for message in messages %}
 {{ message }}    <br>
 {% endfor %}
 {% endif %}
-<div class="bid-form">
-    {% if listing.item_image %}
-    <img src="{{ listing.item_image }}" width="200" height="200" alt="{{ listing.item_name }}">
-    {% endif %}
-    <br>
-    <h2>Place a Bid on {{ listing.item_name }}</h2>
-    <p>Current bid: $ {{ listing.current_bid }}</p>
-    <form method="post">
+
+<div class="bid-container">
+    <h3 class="text-3xl font-bold dark:text-white">{{ listing.item_name }}</h3>
+    <p class="mb-3 text-gray-500 dark:text-gray-400" >HIGHEST BID: $ {{ listing.current_bid }}</p>
+    <form class="bid-form" method="post">
+        <img src="{{ listing.item_image }}"alt="{{ listing.item_name }}">
+        <br>
         {% csrf_token %}
         {{ bid_form.as_p }}
-        <button type="submit" class="btn btn-primary">Place Bid</button>
+        <br>
+        Additional comments? (Optional)
+        <textarea name="comment"  id="comment"></textarea>
+        <div class="bid-form-options">
+            <a class="home" href="{% url 'view_listing' listing.id %}" class="home">Back to Listing</a>
+            <button class="place-bid-button" type="submit">Place Bid</button>
+        </div>
     </form>
-    <a href="{% url 'view_listing' listing.id %}" class="btn btn-secondary">Back to Listing</a>
 </div>
+
 {% endblock %}

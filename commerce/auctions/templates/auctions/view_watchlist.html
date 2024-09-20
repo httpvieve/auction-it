@@ -3,7 +3,7 @@
 {% block body %}
 {% if user.is_authenticated %}
     <div class="page-title mx-auto text-xl font-semibold text-lightgray-900 dark:text-white sm:text-3xl">
-        <h2> 🛒 your watchlist</h2>
+        <h2> 🛒 your watchlist [{{auctions|length}}] </h2>
     </div>
     {% endif %} 
 <div class="listings-container">
@@ -16,12 +16,17 @@
                 <div class="listing-details">
                     <h2 class="listing-name">{{ listing.item_name }}</h2>
                     {% if listing.is_available %}
-                    <p class="listing-bid">Current bid: ${{ listing.current_bid }}</p>
+                    <p class="listing-bid">CURRENT HIGHEST BID: ${{ listing.current_bid }}</p>
                     <a href="{% url 'view_listing' listing.id %}" class="listing-button">View Listing</a>
                     {% else %}
-                    <div class="closed-notice">
-                        Auction Closed
-                    </div>
+                        {% if listing.auction_winner == user.username %}
+                            <p>Congratulations! You've won the auction. You have bought this item for ${{listing.current_bid}}.</p>
+                        {% else %}
+                            <p>This auction is closed and no longer accepting bids.</p> 
+                        {% endif %} 
+                        <div class="closed-notice">
+                            Auction Closed
+                        </div>
                     {% endif %}
                 </div>
             </div>
