@@ -78,7 +78,6 @@ def create_listing(request):
             return redirect('view_listing', listing_id=new_listing.id)
     else:
         listing_form = ListingForm()
-    
     return render(request, 'auctions/create_listing.html', {
         'listing_form': listing_form
     })
@@ -129,8 +128,10 @@ def view_listing(request, listing_id):
             current.watchers.remove(request.user)
         elif "close_auction" in request.POST:
             current.is_available = False
-            current.auction_winner = request.user
-            current.watchers.clear()
+            if current.current_bid != current.starting_bid:
+                highest_bid = Bid.objects.get(bid_offer = current.current_bid) 
+                current.auction_winner = highest_bid.current_user.username
+            # current.watchers.clear()
         else:
             comment_form = CommentForm(request.POST)
             if comment_form.is_valid():
@@ -170,7 +171,16 @@ def create_bid(request, listing_id):
                 
                 target_listing.current_bid = offer
                 target_listing.watchers.add(request.user)
-                target_listing.save()
+                target_listing.save()   
+                
+                if len(request.POST['comment']) > 0 :
+                    comment_form = CommentForm()
+                    new_comment = comment_form.save(commit = False)
+                    new_comment.current_user = request.user
+                    new_comment.current_item = target_listing
+                    new_comment.comment = request.POST['comment']
+                    new_comment.save()
+                
                 messages.success(request, "Your bid was placed successfully!")
                 return redirect('view_listing', listing_id=listing_id)
             else:
