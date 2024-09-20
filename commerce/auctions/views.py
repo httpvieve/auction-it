@@ -67,11 +67,16 @@ def register(request):
 
 @login_required
 def create_listing(request):
-    
+
     if request.method == "POST": 
         listing_form = ListingForm(request.POST)
         if listing_form.is_valid(): 
             new_listing = listing_form.save(commit=False)
+            if not new_listing.item_image:
+                new_listing.item_image = 'https://curie.pnnl.gov/sites/default/files/default_images/default-image_0.jpeg'
+            if not new_listing.item_category:
+                others = Category.objects.get(name='Others')
+                new_listing.item_category = others
             new_listing.auctioneer = request.user
             new_listing.current_bid = new_listing.starting_bid
             new_listing.save()
