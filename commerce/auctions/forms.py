@@ -11,7 +11,7 @@ class ListingForm(forms.ModelForm):
             'item_name': 'Product Name * ', 
             'item_description': 'Product Description ',
             'item_image':'Image URL ',
-            'item_category':'Select Category *  ',
+            'item_category':'Select Category ',
             'starting_bid': 'Initial Price * '
         }
         widgets = {

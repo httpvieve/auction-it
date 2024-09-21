@@ -20,15 +20,13 @@
         <a href="{% url 'index' %}" class="logo"> auction.it</a>
         <nav class="navbar">
             {% if user.is_authenticated %}
-            {% comment %} <p class="auth-status">Welcome, <strong> {{ user.username }}</strong>!</p> {% endcomment %}
-            <a href="{% url 'index' %}">home</a>
-            <a href="{% url 'categories' %}">view categories</a> 
-            <a href="{% url 'watchlist' %}">watchlist </a>
-            <a href="{% url 'create_listing' %}">create</a>
-            <a href="{% url 'user_listing' %}">view listings</a>
-            <a href="{% url 'logout' %}">log out</a>
+                <a href="{% url 'index' %}">home</a>
+                <a href="{% url 'categories' %}">view categories</a> 
+                <a href="{% url 'watchlist' %}">watchlist </a>
+                <a href="{% url 'create_listing' %}">create</a>
+                <a href="{% url 'user_listing' %}">view listings</a>
+                <a href="{% url 'logout' %}">log out</a>
             {% else %}
-                {% comment %} <p class="auth-status">Not signed in</p> {% endcomment %}
                 <a href="{% url 'login' %}">log in</a>
                 <a href="{% url 'register' %}">register</a>
             {% endif %}

@@ -35,25 +35,4 @@
         <p>You're not watching any listings yet.</p>
     {% endif %}
 </div>
-    {% comment %} <h2>Your Watchlist</h2>
-    {% if auctions %}
-        <div class="row">
-            {% for listing in auctions %}
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        {% if listing.item_image %}
-                            <img src="{{ listing.item_image }}" class="card-img-top" alt="{{ listing.item_name }}">
-                        {% endif %}
-                        <div class="card-body">
-                            <h5 class="card-title">{{ listing.item_name }}</h5>
-                            <p class="card-text">Current Bid: ${{ listing.current_bid }}</p>
-                            <a href="{% url 'view_listing' listing.id %}" class="btn btn-primary">View Listing</a>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-    {% else %}
-        <p>You're not watching any listings yet.</p>
-    {% endif %} {% endcomment %}
 {% endblock %}

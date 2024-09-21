@@ -16,27 +16,25 @@
         <li>CATEGORY: {{listing.item_category.name}} </li>
         <li>LISTED BY: {{listing.auctioneer}} on {{listing.time_created}}</li>
     
-        {% if listing.is_available %}
-            <li class="item-price">${{ listing.current_bid }}</li>
-            <div class="line-break"></div>
-            {% if listing.item_description|length == 0 %}
-                <li class="description"> No description provided. </li>
-            {% else %}
-                <li class="description">{{ listing.item_description }} </li>
-            <div class="line-break"></div>
-            {% endif %} 
+    {% if listing.is_available %}
+        <li class="item-price">${{ listing.current_bid }}</li>
+        <div class="line-break"></div>
+        {% if listing.item_description|length == 0 %}
+            <li class="description"> No description provided. </li>
+        {% else %}
+            <li class="description">{{ listing.item_description }} </li>
+        <div class="line-break"></div>
+        {% endif %} 
 
         <p> {{listing.watchers.count }} user(s) are currently watching this item. </p>
         <p> {{ count }} bid(s) so far. </p> 
         {% if user != listing.auctioneer %} 
-        {% if user  in listing.watchers.all %}
+            {% if user  in listing.watchers.all %}
         <p> Listing is currently in your watchlist. </p> 
         {% else %}
         <p> Listing is not currently in your watchlist. </p> 
         {% endif %}
         <div class="buyer">
-
-
             {% if user not in listing.watchers.all %}
             <form method="POST">
                 {% csrf_token %}
@@ -48,7 +46,6 @@
                 <li class="watchlist-remove-button" ><button type="submit" name="remove_from_watchlist">Remove from Watchlist</button></li>
                 </form>
                 {% endif %}
-                
                 <form action="{% url 'create_bid' listing.id %}" method="POST">
                     {% csrf_token %}
                     <li class="bid-button"><button type="submit" name="create_bid">Bid</button></li>
@@ -87,9 +84,7 @@
 </div>
 </div>
 
-
-
- {% if listing.item_description|length != 0 and listing.is_available %}
+{% if listing.item_description|length != 0 and listing.is_available %}
   <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
     <div class="mx-auto max-w-5xl">
       <h2 class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">Product description</h2><br>
@@ -103,64 +98,48 @@
 <hr>
 
 <div class="transaction-container">
-    
-<div class="transaction-history">
-    {% if user == listing.auctioneer and listing.is_available %} 
-    <h3 class="text-3xl font-bold dark:text-white"> TRANSACTIONS</h3>
-    {% if count != 0%}
-       {% for bid in bids reversed %}
-            {% if bid.current_item.item_name == listing.item_name %}
-                <ul><br>
-                <li class="transaction-card"> 
-                <p class="inline-flex mb-3 text-gray-900 dark:text-gray-400">{{bid.current_user}} bids for {{bid.bid_offer}}
-                {% if bid.bid_offer == listing.current_bid %}
-                <form method="POST">
+    <div class="transaction-history">
+        {% if user == listing.auctioneer and listing.is_available %} 
+        <h3 class="text-3xl font-bold dark:text-white"> TRANSACTIONS</h3>
+        {% if count != 0%}
+            {% for bid in bids reversed %}
+                {% if bid.current_item.item_name == listing.item_name %}
+                    <ul><br><li class="transaction-card"> 
+                    <p class="inline-flex mb-3 text-gray-900 dark:text-gray-400">{{bid.current_user}} bids for {{bid.bid_offer}}
+                    {% if bid.bid_offer == listing.current_bid %}
+                        <form method="POST">
                         {% csrf_token %}
-                        <button class="accept-bid-button" type="submit" name="close_auction">Accept Bid</button>
-                        </p>
-                   
-                    </form>
+                        <button class="accept-bid-button" type="submit" name="close_auction">Accept Bid</button></p>   
+                        </form>
+                    {% endif %}
+                    </li><hr> </ul>
                 {% endif %}
-                </li><hr> 
-                </ul>
-                {% endif %}
-                {% endfor %} 
-                {% else %}
-                <h4>No bids yet.</h4>
-                {% endif %}
-{% endif %}
+            {% endfor %} 
+        {% else %}
+        <h4>No bids yet.</h4>
+        {% endif %}
+    {% endif %}
     </div>
     <div class="transaction-comments">
-                <h2 class="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">Comments ({{comments|length}})</h2>
-
-            <form method="post">
-                {% csrf_token %}
-                {{ comment_form.as_p }}
-                 <ul>
-                <li class="add-comment-button"><button type="submit">Add Comment</button></li></ul>
+        <h2 class="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">Comments ({{comments|length}})</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ comment_form.as_p }}
+            <ul><li class="add-comment-button"><button type="submit">Add Comment</button></li></ul>
             </form>
-
             {% for comment in comments %}
-            <div class="comment-details">
-            <div class="flex items-center">
-            <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">{{comment.current_user.username}} </p> 
-            <p class="text-sm text-gray-600 dark:text-gray-400"> {{comment.time_created}}</p>
-            </div>
-            <p class="text-gray-500 dark:text-gray-400"> {{comment.comment}} </p>
-            </div>
-
-            <hr>
-
+                <div class="comment-details">
+                    <div class="flex items-center">
+                        <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">{{comment.current_user.username}} </p> 
+                        <p class="text-sm text-gray-600 dark:text-gray-400"> {{comment.time_created}}</p>
+                    </div>
+                    <p class="text-gray-500 dark:text-gray-400"> {{comment.comment}} </p>
+                </div><hr>
             {% empty %}
                 <p class="text-gray-500 dark:text-gray-400 text-center " >This listing has no comments yet.</p>
             {% endfor %}
-
-    
     </div>
 </div>
-
-
-
 
 {% endblock %}
 

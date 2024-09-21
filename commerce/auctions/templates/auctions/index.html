@@ -1,24 +1,22 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-
     <br><br><br>
-<div class="auth-status">
-{% if user.is_authenticated %}
-<h5 class="text-l font-lighter dark:text-white text-end">Signed in as <strong> {{ user.username }}</strong>. </h5> 
-{% else %}
-<h5 class="text-l font-lighter dark:text-white text-end">
-    Not signed in.</h5> 
-    {% endif %} 
-</div>
-    <div class="banner-text"> 
-    <h1 class=" typing-container mb-4 text-4xl font-bold leading-none tracking-tight text-sky-900 md:text-5xl lg:text-6xl dark:text-white text-center"> 
-        Navigate a world of <span class=" underline underline-offset-1 decoration-8 decoration-neutral-900 dark:decoration-blue-600">deals and opportunities</span>.</h1>
+    <div class="auth-status">
+        <h5 class="text-l font-lighter dark:text-white text-end">
+        {% if user.is_authenticated %}
+            Signed in as <strong> {{ user.username }}</strong>. </h5> 
+        {% else %}
+            Not signed in.
+        {% endif %} 
+    </h5> 
     </div>
 
-        <div class="banner-container">
+    <div class="banner-text"> 
+        <h1 class=" typing-container mb-4 text-4xl font-bold leading-none tracking-tight text-sky-900 md:text-5xl lg:text-6xl dark:text-white text-center"> Navigate a world of <span class=" underline underline-offset-1 decoration-8 decoration-neutral-900 dark:decoration-blue-600">deals and opportunities</span>.</h1>
     </div>
-<hr>
+    <div class="banner-container"></div><hr>
+
     <div class="wrapper-container">
          <div class="wrapper">
             <p> YOUR ONE-STOP MARKETPLACE FOR YOUR  </p>
@@ -33,44 +31,25 @@
         </div>
      </div>
 
-<div class="listings-container">
-    {% if auctions %}
-        {% for listing in auctions %}
-            {% if listing.is_available %}
-            <div class="listing-card">
-                {% if listing.item_image %}
-                    <img src="{{ listing.item_image }}" alt="{{ listing.item_name }}" class="listing-image">
-                {% endif %}
-                <div class="listing-details">
-                    <h2 class="listing-name">{{ listing.item_name }}</h2>
-                    <p class="listing-info">Listed on: {{ listing.time_created|date:"F d, Y" }} at {{ listing.time_created|time:"H:i" }}</p>
-                    <p class="listing-bid">Current bid: ${{ listing.current_bid }}</p>
-                    <a href="{% url 'view_listing' listing.id %}" class="listing-button">View Listing</a>
+    <div class="listings-container">
+        {% if auctions %}
+            {% for listing in auctions %}
+                {% if listing.is_available %}
+                <div class="listing-card">
+                    {% if listing.item_image %}
+                        <img src="{{ listing.item_image }}" alt="{{ listing.item_name }}" class="listing-image">
+                    {% endif %}
+                    <div class="listing-details">
+                        <h2 class="listing-name">{{ listing.item_name }}</h2>
+                        <p class="listing-info">Listed on: {{ listing.time_created|date:"F d, Y" }} at {{ listing.time_created|time:"H:i" }}</p>
+                        <p class="listing-bid">Current bid: ${{ listing.current_bid }}</p>
+                        <a href="{% url 'view_listing' listing.id %}" class="listing-button">View Listing</a>
+                    </div>
                 </div>
-            </div>
-            {% endif %}
-        {% endfor %}
-    {% else %}
-        <p>No active listings available.</p>
-    {% endif %}
-</div>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <p>No active listings available.</p>
+        {% endif %}
+    </div>
 {% endblock %}
-{% comment %} {% extends "auctions/layout.html" %}
-
-{% block body %}
-    <h2>Active Listings</h2>
-    {% for listing in auctions %}
-
-        <div class="listing_card">
-            <img src="{{listing.item_image}}" width="200" height="200">
-            <a href={%url 'view_listing' listing.id %} >
-            <h5> {{listing.item_name}} </h5>
-            </a>
-            <p> <strong>Price</strong>: ${{listing.starting_bid}}</p>
-            <p> Created {{listing.time_created}} </p> 
-        </div>
-
-    {% empty %}
-        <p>No items yet.</p>
-    {% endfor %}
-{% endblock %} {% endcomment %}

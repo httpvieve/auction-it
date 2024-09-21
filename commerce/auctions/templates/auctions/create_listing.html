@@ -1,19 +1,18 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-{% comment %} <h3> 📝 Adding new lisitng.. </h3> {% endcomment %}
+
 <div class="page-title mx-auto text-xl font-semibold text-lightgray-900 dark:text-white sm:text-3xl">
     <h2> 📝 Adding new listing.. </h2>
 </div>
 <div class="auction-container">
-<form class="auction-form" action="{% url 'create_listing' %}" method="post">
+    <form class="auction-form" action="{% url 'create_listing' %}" method="post">
     {% csrf_token %}
         {{ listing_form.as_p }}    
         <div class="options">
             <a class="home" href="{% url 'index' %}"> Back </a>
             <input class="add-listing" type="submit" value="  Auction it!  "> 
         <div>
- 
     </form>
 </div>
 {% endblock %}

@@ -16,7 +16,19 @@
                 {% endif %}
                 <div class="listing-details">
                     <h2 class="listing-name">{{ listing.item_name }}</h2>
-                    <p class="listing-bid">Current bid: ${{ listing.current_bid }} by </p>
+                    {% if listing.is_available %}
+                    {% if listing.starting_bid == listing.current_bid %}
+                        <p class="listing-bid">No bids yet.</p>
+                    {% else %}
+                    <p class="listing-bid">Current bid: ${{ listing.current_bid }}</p>
+                    {% endif %}
+                    {% else %}
+                        {% if listing.starting_bid != listing.current_bid %}
+                            <p class="listing-bid">This item is sold.</p>
+                        {% else %}
+                            <p class="listing-bid">Listing deleted.</p>
+                            {% endif %}
+                            {% endif %}
                     <a href="{% url 'view_listing' listing.id %}" class="listing-button">View Listing</a>
                 </div>
             </div>
