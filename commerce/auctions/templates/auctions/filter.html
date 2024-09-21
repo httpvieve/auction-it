@@ -3,9 +3,10 @@
 {% block body %}
 
 {% if user.is_authenticated %}
-    <div class="auth-status">
-        <h2> active listings in {{category}}</h2>
-    </div>
+
+        <br><br><br><br>
+        <h2 class="item-name"> active listings in {{category}}</h2>
+
 {% endif %}  
 <div class="listings-container">
     {% if auctions %}

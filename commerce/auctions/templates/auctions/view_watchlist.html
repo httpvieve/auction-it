@@ -20,13 +20,12 @@
                     <a href="{% url 'view_listing' listing.id %}" class="listing-button">View Listing</a>
                     {% else %}
                         {% if listing.auction_winner == user.username %}
-                            <p>Congratulations! You've won the auction. You have bought this item for ${{listing.current_bid}}.</p>
+                            <p>Congratulations! You have won the auction. </p>
+                            <a href="{% url 'view_listing' listing.id %}"class="closed-notice" ><br>View Archived Listing</a>
                         {% else %}
                             <p>This auction is closed and no longer accepting bids.</p> 
+                            <div class="closed-notice">Auction Closed</div>
                         {% endif %} 
-                        <div class="closed-notice">
-                            Auction Closed
-                        </div>
                     {% endif %}
                 </div>
             </div>

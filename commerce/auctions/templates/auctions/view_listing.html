@@ -70,14 +70,14 @@
                 {% if listing.auction_winner is None %}
                     <p>You have archived this listing.</p>
                 {% else %}
-                    <p> You have sold for ${{listing.current_bid}} to bidder {{listing.auction_winner}}. </p> 
+                    <p> You have sold this item for ${{listing.current_bid}} to bidder {{listing.auction_winner}}. </p> 
                 {% endif %}
-            {% comment %} {% else %}
-                {% if listing.auction_winner == user %}
-                    <p>Congratulations! You're the winner in this auction. You have bought this item for ${{listing.current_bid}.</p>
-                {% else %}
-                    <p>This auction is closed and no longer accepting bids. This item was sold for ${{listing.current_bid}}.</p> 
-                {% endif %} {% endcomment %}
+            {% else %}
+                {% if listing.auction_winner == user.username %}
+                    <p><br><hr><br>Congratulations! <br><br> Auctioneer {{listing.auctioneer.username}} have accepted your bid worth ${{listing.current_bid}}.</p>
+                {% comment %} {% else %}
+                    <p>This auction is closed and no longer accepting bids. This item was sold for ${{listing.current_bid}}.</p>  {% endcomment %}
+                {% endif %} 
             {% endif %} 
     {% endif %} 
 </div>

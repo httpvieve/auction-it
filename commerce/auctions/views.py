@@ -87,7 +87,7 @@ def create_listing(request):
         'listing_form': listing_form
     })
                    
-            
+         
 def all_categories(request):
     return render(request, "auctions/view_categories.html")
 
