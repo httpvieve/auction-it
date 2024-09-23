@@ -27,14 +27,15 @@ To set up this project on your computer:
     ```
     git clone https://github.com/httpvieve/auction-it.git
     ```
-2. Install all necessary dependencies
-    ```
-    pip install -r requirements.txt
-    ```
-3. Open commerce folder
+2. Open commerce folder
     ```
     cd commerce
     ```
+3. Install all necessary dependencies
+    ```
+    pip install -r requirements.txt
+    ```
+
 4. Make migrations then migrate
     ```
     python manage.py makemigrations
